@@ -149,28 +149,6 @@ Window: DesignerWindow
                           Header: Macro Recorder
                           IsEnabled: false
                 
-                - MenuItem: DemoMenu
-                  Header: _Demo
-                  
-                  Children:
-                    - MenuItem: DemoDialogInfo
-                      Header: Info Dialog (Soft-Coded)
-                      ToolTip: Demonstrates AVML Action system
-                      Action: dialog.info
-                      ActionParams: title=Soft-Coded Action!;message=This dialog was triggered by AVML!\\n\\nNo hardcoded event handlers needed.\\nJust Action + ActionParams in YAML.\\n\\n✨ The future of RAD!
-                      
-                    - MenuItem: DemoFileOpen
-                      Header: File Open Dialog
-                      ToolTip: File picker demo
-                      Action: dialog.open
-                      ActionParams: title=Open AVML File;filter=*.avml;directory=~/Downloads
-                      
-                    - Separator: DemoSep1
-                    
-                    - MenuItem: TestCreateControl
-                      Header: 🧪 Test Create Button
-                      ToolTip: Test programmatic control creation
-                
                 - MenuItem: HelpMenu
                   Header: _Help
                   
@@ -236,7 +214,7 @@ Window: DesignerWindow
                 - Border: ToolboxTitleBar
                   DockPanel.Dock: Top
                   Height: 28
-                  Background: #90EE90
+                  Background: #00AA00
                   BorderBrush: #CCCCCC
                   BorderThickness: 0,0,0,1
                   
@@ -263,7 +241,7 @@ Window: DesignerWindow
                           FontSize: 12
                           FontWeight: Bold
                           Foreground: #FFFFFF
-                          Background: #90EE90
+                          Background: #00AA00
                           Padding: 0
                           ToolTip: Close toolbox (Ctrl+Alt+X to reopen)
                           Action: panel.toggle
@@ -351,7 +329,7 @@ Window: DesignerWindow
                 - Border: PropertiesTitleBar
                   DockPanel.Dock: Top
                   Height: 28
-                  Background: #90EE90
+                  Background: #00AA00
                   BorderBrush: #CCCCCC
                   BorderThickness: 0,0,0,1
                   
@@ -378,7 +356,7 @@ Window: DesignerWindow
                           FontSize: 12
                           FontWeight: Bold
                           Foreground: #FFFFFF
-                          Background: #90EE90
+                          Background: #00AA00
                           Padding: 0
                           ToolTip: Close properties (F4 to reopen)
                           Action: panel.toggle

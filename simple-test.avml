@@ -1,0 +1,61 @@
+# Simple Test Designer
+
+Window: TestWindow
+  Title: Simple Test
+  Width: 800
+  Height: 600
+  
+  Children:
+    - DockPanel: MainLayout
+      LastChildFill: true
+      
+      Children:
+        - Menu: TopMenu
+          DockPanel.Dock: Top
+          Height: 26
+          
+          Children:
+            - MenuItem: FileMenu
+              Header: _File
+              
+              Children:
+                - MenuItem: FileNew
+                  Header: _New
+                  
+                - MenuItem: FileOpen
+                  Header: _Open
+                  
+                - MenuItem: FileSave
+                  Header: _Save
+            
+            - MenuItem: EditMenu
+              Header: _Edit
+              
+              Children:
+                - MenuItem: EditCut
+                  Header: _Cut
+                  
+                - MenuItem: EditCopy
+                  Header: _Copy
+                  
+                - MenuItem: EditPaste
+                  Header: _Paste
+            
+            - MenuItem: ViewMenu
+              Header: _View
+              
+              Children:
+                - MenuItem: ViewZoomIn
+                  Header: Zoom _In
+                  
+                - MenuItem: ViewZoomOut
+                  Header: Zoom _Out
+                  
+                - MenuItem: ViewReset
+                  Header: _Reset
+        
+        - TextBlock: Content
+          Text: Simple menu test
+          FontSize: 16
+          HorizontalAlignment: Center
+          VerticalAlignment: Center

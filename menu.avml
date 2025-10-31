@@ -1,0 +1,179 @@
+# Avalised Designer Menu Structure
+# Generated for testing the AVML parser
+
+MenuItem: MainMenuBar
+  Header: Main Menu
+  
+  Children:
+    # ========== FILE MENU ==========
+    - MenuItem: FileMenu
+      Header: _File
+      
+      Children:
+        - MenuItem: FileNew
+          Header: _New
+          InputGesture: Ctrl+N
+        
+        - MenuItem: FileOpen
+          Header: _Open
+          InputGesture: Ctrl+O
+          ToolTip: Open AVML or Project file
+        
+        - MenuItem: FileSave
+          Header: _Save
+          InputGesture: Ctrl+S
+        
+        - MenuItem: FileSaveAs
+          Header: Save _As
+          InputGesture: Ctrl+Shift+S
+        
+        - Separator: FileSep1
+        
+        - MenuItem: FileRecentFiles
+          Header: Recent _Files
+          
+          Children:
+            # Recent files will be populated dynamically
+            - MenuItem: FileNoRecent
+              Header: (No recent files)
+              IsEnabled: false
+        
+        - Separator: FileSep2
+        
+        - MenuItem: FileExit
+          Header: E_xit
+          InputGesture: Alt+F4
+    
+    # ========== EDIT MENU ==========
+    - MenuItem: EditMenu
+      Header: _Edit
+      
+      Children:
+        - MenuItem: EditUndo
+          Header: _Undo
+          InputGesture: Ctrl+Z
+        
+        - MenuItem: EditRedo
+          Header: _Redo
+          InputGesture: Ctrl+Y
+        
+        - Separator: EditSep1
+        
+        - MenuItem: EditCut
+          Header: Cu_t
+          InputGesture: Ctrl+X
+        
+        - MenuItem: EditCopy
+          Header: _Copy
+          InputGesture: Ctrl+C
+        
+        - MenuItem: EditPaste
+          Header: _Paste
+          InputGesture: Ctrl+V
+        
+        - MenuItem: EditDelete
+          Header: _Delete
+          InputGesture: Delete
+        
+        - Separator: EditSep2
+        
+        - MenuItem: EditFind
+          Header: _Find
+          InputGesture: Ctrl+F
+        
+        - MenuItem: EditReplace
+          Header: R_eplace
+          InputGesture: Ctrl+H
+    
+    # ========== VIEW MENU ==========
+    - MenuItem: ViewMenu
+      Header: _View
+      
+      Children:
+        - MenuItem: ViewToolbox
+          Header: _Toolbox
+          InputGesture: Ctrl+Alt+X
+        
+        - MenuItem: ViewProperties
+          Header: _Properties
+          InputGesture: F4
+        
+        - MenuItem: ViewOutput
+          Header: _Output
+          InputGesture: Ctrl+Alt+O
+        
+        - Separator: ViewSep1
+        
+        - MenuItem: ViewZoomIn
+          Header: Zoom _In
+          InputGesture: Ctrl+Plus
+        
+        - MenuItem: ViewZoomOut
+          Header: Zoom _Out
+          InputGesture: Ctrl+Minus
+        
+        - MenuItem: ViewZoomReset
+          Header: Zoom _Reset
+          InputGesture: Ctrl+0
+    
+    # ========== TOOLS MENU ==========
+    - MenuItem: ToolsMenu
+      Header: _Tools
+      
+      Children:
+        - MenuItem: ToolsImport
+          Header: _Import
+          
+          Children:
+            - MenuItem: ToolsImportVB5
+              Header: _VB5 Project
+            
+            - MenuItem: ToolsImportVB6
+              Header: VB_6 Project
+            
+            - MenuItem: ToolsImportQt
+              Header: _Qt Project
+            
+            - MenuItem: ToolsImportXAML
+              Header: _XAML Project
+            
+            - MenuItem: ToolsImportHTML
+              Header: _HTML/CSS
+            
+            - MenuItem: ToolsImportGlade
+              Header: _Glade (GTK)
+        
+        - Separator: ToolsSep1
+        
+        - MenuItem: ToolsAvmlEditor
+          Header: _Avalised Markup Editor
+          InputGesture: F7
+        
+        - MenuItem: ToolsDebugger
+          Header: _Debugger
+          InputGesture: F5
+          ToolTip: User-added debugging tools
+        
+        - Separator: ToolsSep2
+        
+        - MenuItem: ToolsOptions
+          Header: _Options
+    
+    # ========== HELP MENU ==========
+    - MenuItem: HelpMenu
+      Header: _Help
+      
+      Children:
+        - MenuItem: HelpGettingStarted
+          Header: _Getting Started
+        
+        - MenuItem: HelpWiki
+          Header: Avalised _Wiki
+          InputGesture: F1
+          ToolTip: Opens github.com/wallisoft/avalised
+        
+        - Separator: HelpSep1
+        
+        - MenuItem: HelpAbout
+          Header: _About Avalised
+          ToolTip: Steve "recursion hurts my head" Wallis & Claude "set: paste" (Anthropic)

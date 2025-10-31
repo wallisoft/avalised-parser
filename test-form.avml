@@ -1,0 +1,39 @@
+# Simple Test Form - Proving AVML Works!
+# A basic "Hello World" form with a few controls
+
+Window: TestWindow
+  Title: AVML Test Form
+  Width: 400
+  Height: 300
+  
+  Children:
+    - StackPanel: MainStack
+      Orientation: Vertical
+      Spacing: 10
+      Margin: 20
+      
+      Children:
+        - TextBlock: WelcomeText
+          Text: Welcome to AVML!
+          FontSize: 18
+          FontWeight: Bold
+          
+        - TextBlock: SubText
+          Text: This form was built from YAML
+          FontSize: 12
+          Foreground: #666666
+          
+        - TextBox: NameInput
+          Watermark: Enter your name...
+          Width: 300
+          Height: 30
+          
+        - Button: SubmitButton
+          Content: Click Me!
+          Width: 150
+          Height: 35
+          HorizontalAlignment: Center
+          
+        - CheckBox: AgreeCheck
+          Content: I agree this is awesome
+          IsChecked: true

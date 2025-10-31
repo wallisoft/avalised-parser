@@ -1,0 +1,142 @@
+# Minimal Test - Window + Menu Only
+
+Window: TestWindow
+  Title: Menu Test
+  Width: 1400
+  Height: 900
+  MinWidth: 1024
+  MinHeight: 768
+  
+  Children:
+    - DockPanel: MainLayout
+      LastChildFill: true
+      
+      Children:
+        # ========== TOP MENU ==========
+        - Menu: TopMenu
+          Padding: 2,0,2,0
+          FontSize: 14
+          Height: 26
+          DockPanel.Dock: Top
+          
+          Children:
+            - MenuItem: FileMenu
+              Header: _File
+              
+              Children:
+                - MenuItem: FileNew
+                  Header: _New
+                  InputGesture: Ctrl+N
+                  ToolTip: Create new form
+                  
+                - MenuItem: FileOpen
+                  Header: _Open
+                  InputGesture: Ctrl+O
+                  ToolTip: Open AVML file
+                  
+                - MenuItem: FileSave
+                  Header: _Save
+                  InputGesture: Ctrl+S
+                  ToolTip: Save to AVML
+                  
+                - MenuItem: FileExport
+                  Header: _Export AVML
+                  InputGesture: Ctrl+E
+                  ToolTip: Export current design to AVML
+                  
+                - Separator: FileSep1
+                  
+                - MenuItem: FileExit
+                  Header: E_xit
+                  InputGesture: Alt+F4
+                  
+            - MenuItem: EditMenu
+              Header: _Edit
+              
+              Children:
+                - MenuItem: EditUndo
+                  Header: _Undo
+                  InputGesture: Ctrl+Z
+                  
+                - MenuItem: EditRedo
+                  Header: _Redo
+                  InputGesture: Ctrl+Y
+                  
+                - Separator: EditSep1
+                  
+                - MenuItem: EditCut
+                  Header: Cu_t
+                  InputGesture: Ctrl+X
+                  
+                - MenuItem: EditCopy
+                  Header: _Copy
+                  InputGesture: Ctrl+C
+                  
+                - MenuItem: EditPaste
+                  Header: _Paste
+                  InputGesture: Ctrl+V
+                  
+                - MenuItem: EditDelete
+                  Header: _Delete
+                  InputGesture: Delete
+                  
+            - MenuItem: ViewMenu
+              Header: _View
+              
+              Children:
+                - MenuItem: ViewToolbox
+                  Header: _Toolbox
+                  InputGesture: Ctrl+Alt+X
+                  
+                - MenuItem: ViewProperties
+                  Header: _Properties
+                  InputGesture: F4
+                  
+                - MenuItem: ViewGrid
+                  Header: Show _Grid
+                  
+                - Separator: ViewSep1
+                  
+                - MenuItem: ViewPreview
+                  Header: _Preview Mode
+                  InputGesture: F5
+                  
+            - MenuItem: ToolsMenu
+              Header: _Tools
+              
+              Children:
+                - MenuItem: ToolsClaudeAI
+                  Header: _Claude AI Integration
+                  InputGesture: Ctrl+Shift+C
+                  ToolTip: Connect to Claude for AI-assisted design
+                  
+                - MenuItem: ToolsValidate
+                  Header: _Validate AVML
+                  InputGesture: F7
+                  
+                - Separator: ToolsSep1
+                  
+                - MenuItem: ToolsOptions
+                  Header: _Options
+                  
+            - MenuItem: HelpMenu
+              Header: _Help
+              
+              Children:
+                - MenuItem: HelpGettingStarted
+                  Header: _Getting Started
+                  
+                - MenuItem: HelpDocs
+                  Header: _Documentation
+                  InputGesture: F1
+                  
+                - Separator: HelpSep1
+                  
+                - MenuItem: HelpAbout
+                  Header: _About Avalised
+                  ToolTip: Built by Steve & Claude
+            
+            - MenuItem: PreviewMenu
+              Header: ▶
+              HorizontalAlignment: Right
+              ToolTip: Preview form

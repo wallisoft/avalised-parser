@@ -1,0 +1,10 @@
+MenuItem: TestMenu
+  Header: _Test
+  
+  MenuItem: TestOption1
+    Header: _First Option
+    InputGesture: F1
+  
+  MenuItem: TestOption2
+    Header: _Second Option
+    InputGesture: F2

@@ -1,0 +1,215 @@
+using System.Text.RegularExpressions;
+
+namespace Avalised.Services;
+
+/// <summary>
+/// Tokenizes AVML files with forgiveness for human errors
+/// Accepts tabs OR spaces, auto-detects indent size, ignores blank lines
+/// </summary>
+public class AVMLTokenizer
+{
+    private int _detectedIndentSize = 0;
+    private bool _usesSpaces = true;
+    private List<string> _warnings = new();
+    
+    public List<string> Warnings => _warnings;
+    
+    /// <summary>
+    /// Convert AVML text into tokens
+    /// </summary>
+    public List<AVMLToken> Tokenize(string avmlText)
+    {
+        var tokens = new List<AVMLToken>();
+        var lines = avmlText.Split('\n');
+        
+        // First pass: detect indent style and size
+        DetectIndentStyle(lines);
+        
+        for (int i = 0; i < lines.Length; i++)
+        {
+            var line = lines[i].TrimEnd();  // Keep leading whitespace!
+            var lineNumber = i + 1;
+            
+            // Skip blank lines
+            if (string.IsNullOrWhiteSpace(line))
+            {
+                tokens.Add(new AVMLToken(TokenType.BlankLine, "", lineNumber, 0));
+                continue;
+            }
+            
+            // Handle comments
+            if (line.TrimStart().StartsWith("#") || line.TrimStart().StartsWith("//"))
+            {
+                tokens.Add(new AVMLToken(TokenType.Comment, line.Trim(), lineNumber, 0));
+                continue;
+            }
+            
+            // Calculate indent level
+            int indent = CalculateIndent(line, lineNumber);
+            var trimmedLine = line.TrimStart();
+            
+            // Parse the line content
+            ParseLine(trimmedLine, lineNumber, indent, tokens);
+        }
+        
+        return tokens;
+    }
+    
+    /// <summary>
+    /// Auto-detect if file uses spaces or tabs, and what indent size
+    /// </summary>
+    private void DetectIndentStyle(string[] lines)
+    {
+        var indentSamples = new List<int>();
+        
+        foreach (var line in lines)
+        {
+            if (string.IsNullOrWhiteSpace(line)) continue;
+            
+            // Check first non-blank character
+            int spaces = 0;
+            bool hasTabs = false;
+            
+            foreach (char c in line)
+            {
+                if (c == ' ') spaces++;
+                else if (c == '\t') { hasTabs = true; break; }
+                else break;  // Hit content
+            }
+            
+            if (hasTabs)
+            {
+                _usesSpaces = false;
+                _detectedIndentSize = 1;  // One tab = one level
+                return;
+            }
+            
+            if (spaces > 0)
+                indentSamples.Add(spaces);
+        }
+        
+        // Find most common indent (probably 2 or 4)
+        if (indentSamples.Count > 0)
+        {
+            var gcd = FindGCD(indentSamples);
+            _detectedIndentSize = gcd > 0 ? gcd : 2;  // Default to 2 if can't detect
+            _warnings.Add($"Auto-detected indent: {_detectedIndentSize} spaces");
+        }
+    }
+    
+    /// <summary>
+    /// Calculate indent level for a line
+    /// </summary>
+    private int CalculateIndent(string line, int lineNumber)
+    {
+        int count = 0;
+        
+        foreach (char c in line)
+        {
+            if (c == ' ') count++;
+            else if (c == '\t')
+            {
+                // Convert tabs to spaces if needed
+                if (_usesSpaces)
+                {
+                    _warnings.Add($"Line {lineNumber}: Tab converted to {_detectedIndentSize} spaces");
+                    count += _detectedIndentSize;
+                }
+                else
+                {
+                    count++;
+                }
+            }
+            else break;
+        }
+        
+        return _detectedIndentSize > 0 ? count / _detectedIndentSize : 0;
+    }
+    
+    /// <summary>
+    /// Parse a single line into tokens
+    /// </summary>
+    private void ParseLine(string line, int lineNumber, int indent, List<AVMLToken> tokens)
+    {
+        // YAML list item: "- MenuItem: FileNew"
+        if (line.StartsWith("-"))
+        {
+            tokens.Add(new AVMLToken(TokenType.ListMarker, "-", lineNumber, indent));
+            line = line.Substring(1).TrimStart();
+        }
+        
+        // Split on first colon: "MenuItem: FileMenu" or "Header: _File"
+        var colonIndex = line.IndexOf(':');
+        
+        if (colonIndex == -1)
+        {
+            // No colon - might be a standalone value or error
+            _warnings.Add($"Line {lineNumber}: No colon found, treating as value");
+            tokens.Add(new AVMLToken(TokenType.PropertyValue, line, lineNumber, indent));
+            return;
+        }
+        
+        var key = line.Substring(0, colonIndex).Trim();
+        var value = colonIndex < line.Length - 1 
+            ? line.Substring(colonIndex + 1).Trim() 
+            : "";
+        
+        // Remove quotes if present
+        value = value.Trim('"', '\'');
+        
+        // Is this a control definition or a property?
+        if (IsControlType(key))
+        {
+            tokens.Add(new AVMLToken(TokenType.ControlType, key, lineNumber, indent));
+            if (!string.IsNullOrEmpty(value))
+                tokens.Add(new AVMLToken(TokenType.ControlName, value, lineNumber, indent));
+        }
+        else
+        {
+            tokens.Add(new AVMLToken(TokenType.PropertyName, key, lineNumber, indent));
+            if (!string.IsNullOrEmpty(value))
+                tokens.Add(new AVMLToken(TokenType.PropertyValue, value, lineNumber, indent));
+        }
+    }
+    
+    /// <summary>
+    /// Check if a key looks like a control type (starts with capital)
+    /// This is a heuristic - we'll validate against database later
+    /// </summary>
+    private bool IsControlType(string key)
+    {
+        // Special keywords that look like controls but aren't
+        if (key.Equals("Children", StringComparison.OrdinalIgnoreCase))
+            return false;
+        
+        return !string.IsNullOrEmpty(key) && char.IsUpper(key[0]);
+    }
+    
+    /// <summary>
+    /// Find greatest common divisor of indent samples to detect indent size
+    /// </summary>
+    private int FindGCD(List<int> numbers)
+    {
+        if (numbers.Count == 0) return 2;
+        
+        int result = numbers[0];
+        foreach (int num in numbers.Skip(1))
+        {
+            result = GCD(result, num);
+            if (result == 1) break;  // Can't get smaller
+        }
+        
+        return result;
+    }
+    
+    private int GCD(int a, int b)
+    {
+        while (b != 0)
+        {
+            int temp = b;
+            b = a % b;
+            a = temp;
+        }
+        return a;
+    }
+}

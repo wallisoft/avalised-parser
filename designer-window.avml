@@ -321,92 +321,10 @@ Window: DesignerWindow
           Background: #FAFAFA
           BorderBrush: #CCCCCC
           BorderThickness: 1
-          Padding: 0
+          Padding: 20
           
           Children:
-            - DockPanel: CanvasChrome
-              LastChildFill: true
-              Background: #FAFAFA
-              
-              Children:
-                # Design Canvas (fills first - z-order bottom)
-                - Canvas: DesignCanvas
-                  Width: 800
-                  Height: 600
-                  Background: #FAFAFA
-                  Margin: 20,52,20,20
-                
-                # Title Bar with Window Controls (docked on top - z-order top)
-                - Border: CanvasTitleBar
-                  DockPanel.Dock: Top
-                  Height: 32
-                  Background: #E8E8E8
-                  BorderBrush: #CCCCCC
-                  BorderThickness: 0,0,0,1
-                  
-                  Children:
-                    - DockPanel: TitleBarContent
-                      LastChildFill: false
-                      
-                      Children:
-                        # Window Type Label
-                        - TextBlock: WindowTypeLabel
-                          DockPanel.Dock: Left
-                          Text: Form1
-                          FontSize: 12
-                          FontWeight: SemiBold
-                          VerticalAlignment: Center
-                          Margin: 10,0,0,0
-                        
-                        # Window Control Buttons (pinned right)
-                        - StackPanel: WindowControls
-                          DockPanel.Dock: Right
-                          Orientation: Horizontal
-                          Spacing: 4
-                          Margin: 0,3,6,3
-                          
-                          Children:
-                            - Button: BtnDialog
-                              Content: ▣
-                              Width: 32
-                              Height: 26
-                              FontSize: 16
-                              FontWeight: Bold
-                              Padding: 0
-                              ToolTip: Dialog Mode
-                              
-                            - Button: BtnWindowed
-                              Content: □
-                              Width: 32
-                              Height: 26
-                              FontSize: 16
-                              FontWeight: Bold
-                              Padding: 0
-                              ToolTip: Windowed Mode
-                              
-                            - Button: BtnFullscreen
-                              Content: ■
-                              Width: 32
-                              Height: 26
-                              FontSize: 16
-                              FontWeight: Bold
-                              Padding: 0
-                              ToolTip: Fullscreen Mode
-                              
-                            - Button: BtnMinimize
-                              Content: ▁
-                              Width: 32
-                              Height: 26
-                              FontSize: 16
-                              FontWeight: Bold
-                              Padding: 0
-                              ToolTip: Minimize
-
-
-
-
-
-
-
-
-
+            - Canvas: DesignCanvas
+              Width: 800
+              Height: 600
+              Background: #FFFFFF

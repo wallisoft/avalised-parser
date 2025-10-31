@@ -236,7 +236,7 @@ Window: DesignerWindow
                 - Border: ToolboxTitleBar
                   DockPanel.Dock: Top
                   Height: 28
-                  Background: #E0E0E0
+                  Background: #90EE90
                   BorderBrush: #CCCCCC
                   BorderThickness: 0,0,0,1
                   
@@ -250,16 +250,20 @@ Window: DesignerWindow
                           Text: TOOLBOX
                           FontSize: 12
                           FontWeight: Bold
+                          Foreground: #FFFFFF
                           VerticalAlignment: Center
                           Margin: 8,0,0,0
                           
                         - Button: ToolboxClose
                           DockPanel.Dock: Right
-                          Content: ✕
+                          Content: X
                           Width: 24
                           Height: 24
                           Margin: 0,2,2,2
-                          FontSize: 14
+                          FontSize: 12
+                          FontWeight: Bold
+                          Foreground: #FFFFFF
+                          Background: #90EE90
                           Padding: 0
                           ToolTip: Close toolbox (Ctrl+Alt+X to reopen)
                           Action: panel.toggle
@@ -347,7 +351,7 @@ Window: DesignerWindow
                 - Border: PropertiesTitleBar
                   DockPanel.Dock: Top
                   Height: 28
-                  Background: #E0E0E0
+                  Background: #90EE90
                   BorderBrush: #CCCCCC
                   BorderThickness: 0,0,0,1
                   
@@ -361,16 +365,20 @@ Window: DesignerWindow
                           Text: PROPERTIES
                           FontSize: 12
                           FontWeight: Bold
+                          Foreground: #FFFFFF
                           VerticalAlignment: Center
                           Margin: 8,0,0,0
                           
                         - Button: PropertiesClose
                           DockPanel.Dock: Right
-                          Content: ✕
+                          Content: X
                           Width: 24
                           Height: 24
                           Margin: 0,2,2,2
-                          FontSize: 14
+                          FontSize: 12
+                          FontWeight: Bold
+                          Foreground: #FFFFFF
+                          Background: #90EE90
                           Padding: 0
                           ToolTip: Close properties (F4 to reopen)
                           Action: panel.toggle

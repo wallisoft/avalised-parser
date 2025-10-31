@@ -3,10 +3,10 @@
 
 Window: DesignerWindow
   Title: Avalised Designer v1.0
-  Width: 1400
-  Height: 900
+  Width: 1240
+  Height: 556
   MinWidth: 1226
-  MinHeight: 768
+  MinHeight: 400
   
   Children:
     - DockPanel: MainLayout
@@ -105,12 +105,16 @@ Window: DesignerWindow
                     - MenuItem: ViewToolbox
                       Header: _Toolbox
                       InputGesture: Ctrl+Alt+X
-                      IsEnabled: false
+                      ToolTip: Show/hide toolbox panel
+                      Action: panel.toggle
+                      ActionParams: panel=toolbox
                       
                     - MenuItem: ViewProperties
                       Header: _Properties
                       InputGesture: F4
-                      IsEnabled: false
+                      ToolTip: Show/hide properties panel
+                      Action: panel.toggle
+                      ActionParams: panel=properties
                       
                     - MenuItem: ViewGrid
                       Header: Show _Grid
@@ -206,7 +210,7 @@ Window: DesignerWindow
                   FontSize: 10
                   
                 - TextBlock: WindowSize
-                  Text: Window: 1400×900
+                  Text: Window: 1240×556
                   Foreground: #90EE90
                   FontSize: 10
                   
@@ -220,118 +224,178 @@ Window: DesignerWindow
           DockPanel.Dock: Left
           Width: 213
           Background: #F5F5F5
-          BorderBrush: #444444
-          BorderThickness: 2
+          BorderBrush: #000000
+          BorderThickness: 3
           
           Children:
-            - Border: ToolboxPanel
-              Background: #F5F5F5
-              BorderBrush: #E0E0E0
-              BorderThickness: 0,0,1,0
+            - DockPanel: ToolboxLayout
+              LastChildFill: true
               
               Children:
-                - StackPanel: ToolboxContent
-                  Orientation: Vertical
-                  Spacing: 5
-                  Margin: 10
+                # Toolbox title bar with close button
+                - Border: ToolboxTitleBar
+                  DockPanel.Dock: Top
+                  Height: 28
+                  Background: #E0E0E0
+                  BorderBrush: #CCCCCC
+                  BorderThickness: 0,0,0,1
                   
                   Children:
-                    - TextBlock: ToolboxTitle
-                      Text: TOOLBOX
-                      FontSize: 14
-                      FontWeight: Bold
-                      Margin: 0,0,0,10
+                    - DockPanel: ToolboxTitleContent
+                      LastChildFill: false
                       
-                    - TextBlock: BasicLabel
-                      Text: Basic Controls
-                      FontSize: 10
-                      Foreground: #666666
-                      Margin: 0,5,0,5
+                      Children:
+                        - TextBlock: ToolboxTitleText
+                          DockPanel.Dock: Left
+                          Text: TOOLBOX
+                          FontSize: 12
+                          FontWeight: Bold
+                          VerticalAlignment: Center
+                          Margin: 8,0,0,0
+                          
+                        - Button: ToolboxClose
+                          DockPanel.Dock: Right
+                          Content: ✕
+                          Width: 24
+                          Height: 24
+                          Margin: 0,2,2,2
+                          FontSize: 14
+                          Padding: 0
+                          ToolTip: Close toolbox (Ctrl+Alt+X to reopen)
+                          Action: panel.toggle
+                          ActionParams: panel=toolbox
+                
+                # Toolbox content
+                - Border: ToolboxPanel
+                  Background: #F5F5F5
+                  
+                  Children:
+                    - StackPanel: ToolboxContent
+                      Orientation: Vertical
+                      Spacing: 5
+                      Margin: 10
                       
-                    - Button: AddButton
-                      Content: Button
-                      Height: 32
-                      Action: canvas.addcontrol
-                      ActionParams: type=Button;x=150;y=150;width=100;height=32;content=Button
-                      
-                    - Button: AddTextBox
-                      Content: TextBox
-                      Height: 32
-                      Action: canvas.addcontrol
-                      ActionParams: type=TextBox;x=150;y=200;width=150;height=28;text=TextBox
-                      
-                    - Button: AddLabel
-                      Content: Label
-                      Height: 32
-                      Action: canvas.addcontrol
-                      ActionParams: type=TextBlock;x=150;y=250;width=80;height=24;text=Label
-                      
-                    - Button: AddCheckBox
-                      Content: CheckBox
-                      Height: 32
-                      Action: canvas.addcontrol
-                      ActionParams: type=CheckBox;x=150;y=300;width=100;height=24;content=CheckBox
-                      
-                    - TextBlock: LayoutLabel
-                      Text: Layout Containers
-                      FontSize: 10
-                      Foreground: #666666
-                      Margin: 0,15,0,5
-                      
-                    - Button: AddPanel
-                      Content: Panel
-                      Height: 32
-                      Action: canvas.addcontrol
-                      ActionParams: type=Panel;x=300;y=150;width=200;height=150;background=#EEEEEE
-                      
-                    - Button: AddStackPanel
-                      Content: StackPanel
-                      Height: 32
-                      Action: canvas.addcontrol
-                      ActionParams: type=StackPanel;x=300;y=320;width=200;height=150;background=#E3F2FD
-                      
-                    - Button: AddCanvas
-                      Content: Canvas
-                      Height: 32
-                      Action: canvas.addcontrol
-                      ActionParams: type=Canvas;x=520;y=150;width=200;height=150;background=#E8F5E9
+                      Children:
+                        - TextBlock: BasicLabel
+                          Text: Basic Controls
+                          FontSize: 10
+                          Foreground: #666666
+                          Margin: 0,5,0,5
+                          
+                        - Button: AddButton
+                          Content: Button
+                          Height: 32
+                          Action: canvas.addcontrol
+                          ActionParams: type=Button;x=150;y=150;width=100;height=32;content=Button
+                          
+                        - Button: AddTextBox
+                          Content: TextBox
+                          Height: 32
+                          Action: canvas.addcontrol
+                          ActionParams: type=TextBox;x=150;y=200;width=150;height=28;text=TextBox
+                          
+                        - Button: AddLabel
+                          Content: Label
+                          Height: 32
+                          Action: canvas.addcontrol
+                          ActionParams: type=TextBlock;x=150;y=250;width=80;height=24;text=Label
+                          
+                        - Button: AddCheckBox
+                          Content: CheckBox
+                          Height: 32
+                          Action: canvas.addcontrol
+                          ActionParams: type=CheckBox;x=150;y=300;width=100;height=24;content=CheckBox
+                          
+                        - TextBlock: LayoutLabel
+                          Text: Layout Containers
+                          FontSize: 10
+                          Foreground: #666666
+                          Margin: 0,15,0,5
+                          
+                        - Button: AddPanel
+                          Content: Panel
+                          Height: 32
+                          Action: canvas.addcontrol
+                          ActionParams: type=Panel;x=300;y=150;width=200;height=150;background=#EEEEEE
+                          
+                        - Button: AddStackPanel
+                          Content: StackPanel
+                          Height: 32
+                          Action: canvas.addcontrol
+                          ActionParams: type=StackPanel;x=300;y=320;width=200;height=150;background=#E3F2FD
+                          
+                        - Button: AddCanvas
+                          Content: Canvas
+                          Height: 32
+                          Action: canvas.addcontrol
+                          ActionParams: type=Canvas;x=520;y=150;width=200;height=150;background=#E8F5E9
                   
         # ========== RIGHT PROPERTIES ==========
         - Border: PropertiesContainer
           DockPanel.Dock: Right
           Width: 213
           Background: #F5F5F5
-          BorderBrush: #444444
-          BorderThickness: 2
+          BorderBrush: #000000
+          BorderThickness: 3
           
           Children:
-            - Border: PropertiesPanel
-              Background: #F5F5F5
-              BorderBrush: #E0E0E0
-              BorderThickness: 1,0,0,0
+            - DockPanel: PropertiesLayout
+              LastChildFill: true
               
               Children:
-                - StackPanel: PropertiesContent
-                  Orientation: Vertical
-                  Spacing: 5
-                  Margin: 10
+                # Properties title bar with close button
+                - Border: PropertiesTitleBar
+                  DockPanel.Dock: Top
+                  Height: 28
+                  Background: #E0E0E0
+                  BorderBrush: #CCCCCC
+                  BorderThickness: 0,0,0,1
                   
                   Children:
-                    - TextBlock: PropertiesTitle
-                      Text: PROPERTIES
-                      FontSize: 14
-                      FontWeight: Bold
-                      Margin: 0,0,0,10
+                    - DockPanel: PropertiesTitleContent
+                      LastChildFill: false
                       
-                    - TextBlock: NoSelection
-                      Text: No control selected
-                      FontSize: 11
-                      Foreground: #999999
+                      Children:
+                        - TextBlock: PropertiesTitleText
+                          DockPanel.Dock: Left
+                          Text: PROPERTIES
+                          FontSize: 12
+                          FontWeight: Bold
+                          VerticalAlignment: Center
+                          Margin: 8,0,0,0
+                          
+                        - Button: PropertiesClose
+                          DockPanel.Dock: Right
+                          Content: ✕
+                          Width: 24
+                          Height: 24
+                          Margin: 0,2,2,2
+                          FontSize: 14
+                          Padding: 0
+                          ToolTip: Close properties (F4 to reopen)
+                          Action: panel.toggle
+                          ActionParams: panel=properties
+                
+                # Properties content
+                - Border: PropertiesPanel
+                  Background: #F5F5F5
+                  
+                  Children:
+                    - StackPanel: PropertiesContent
+                      Orientation: Vertical
+                      Spacing: 5
+                      Margin: 10
+                      
+                      Children:
+                        - TextBlock: NoSelection
+                          Text: No control selected
+                          FontSize: 11
+                          Foreground: #999999
                   
         # ========== CENTER CANVAS ==========
         - Border: CanvasContainer
           Background: #FAFAFA
-          BorderBrush: #444444
+          BorderBrush: #000000
           BorderThickness: 3
           Padding: 20
           

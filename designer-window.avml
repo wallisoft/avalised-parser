@@ -13,6 +13,177 @@ Window: DesignerWindow
       LastChildFill: true
       
       Children:
+        # ========== TOP MENU BAR ==========
+        - DockPanel: MenuBar
+          Height: 26
+          DockPanel.Dock: Top
+          LastChildFill: true
+          
+          Children:
+            - Menu: TopMenu
+              Padding: 2,0,2,0
+              FontSize: 14
+              
+              Children:
+                - MenuItem: FileMenu
+                  Header: _File
+                  
+                  Children:
+                    - MenuItem: FileNew
+                      Header: _New
+                      InputGesture: Ctrl+N
+                      ToolTip: Create new form
+                      Action: file.new
+                      
+                    - MenuItem: FileOpen
+                      Header: _Open
+                      InputGesture: Ctrl+O
+                      ToolTip: Open AVML file
+                      Action: file.open
+                      
+                    - MenuItem: FileSave
+                      Header: _Save
+                      InputGesture: Ctrl+S
+                      ToolTip: Save to AVML
+                      Action: file.save
+                      
+                    - Separator: FileSep0
+                      
+                    - MenuItem: FileExport
+                      Header: _Export AVML
+                      InputGesture: Ctrl+E
+                      ToolTip: Export current design to AVML
+                      Action: file.export
+                      
+                    - Separator: FileSep1
+                      
+                    - MenuItem: FileExit
+                      Header: E_xit
+                      InputGesture: Alt+F4
+                      Action: file.exit
+                      
+                - MenuItem: EditMenu
+                  Header: _Edit
+                  
+                  Children:
+                    - MenuItem: EditUndo
+                      Header: _Undo
+                      InputGesture: Ctrl+Z
+                      IsEnabled: false
+                      
+                    - MenuItem: EditRedo
+                      Header: _Redo
+                      InputGesture: Ctrl+Y
+                      IsEnabled: false
+                      
+                    - Separator: EditSep1
+                      
+                    - MenuItem: EditCut
+                      Header: Cu_t
+                      InputGesture: Ctrl+X
+                      IsEnabled: false
+                      
+                    - MenuItem: EditCopy
+                      Header: _Copy
+                      InputGesture: Ctrl+C
+                      IsEnabled: false
+                      
+                    - MenuItem: EditPaste
+                      Header: _Paste
+                      InputGesture: Ctrl+V
+                      IsEnabled: false
+                      
+                    - MenuItem: EditDelete
+                      Header: _Delete
+                      InputGesture: Delete
+                      IsEnabled: false
+                      
+                - MenuItem: ViewMenu
+                  Header: _View
+                  
+                  Children:
+                    - MenuItem: ViewToolbox
+                      Header: _Toolbox
+                      InputGesture: Ctrl+Alt+X
+                      IsEnabled: false
+                      
+                    - MenuItem: ViewProperties
+                      Header: _Properties
+                      InputGesture: F4
+                      IsEnabled: false
+                      
+                    - MenuItem: ViewGrid
+                      Header: Show _Grid
+                      IsEnabled: false
+                      
+                - MenuItem: ToolsMenu
+                  Header: _Tools
+                  
+                  Children:
+                    - MenuItem: ToolsValidate
+                      Header: _Validate AVML
+                      InputGesture: F7
+                      ToolTip: Validate current design against schema
+                      IsEnabled: false
+                      
+                    - Separator: ToolsSep1
+                    
+                    - MenuItem: ToolsComingSoon
+                      Header: Coming Soon...
+                      IsEnabled: false
+                      
+                      Children:
+                        - MenuItem: ToolsImportVB5
+                          Header: Import VB5/6
+                          IsEnabled: false
+                          
+                        - MenuItem: ToolsClaudeAI
+                          Header: Claude AI Integration
+                          IsEnabled: false
+                          
+                        - MenuItem: ToolsMacroRecorder
+                          Header: Macro Recorder
+                          IsEnabled: false
+                
+                - MenuItem: DemoMenu
+                  Header: _Demo
+                  
+                  Children:
+                    - MenuItem: DemoDialogInfo
+                      Header: Info Dialog (Soft-Coded)
+                      ToolTip: Demonstrates AVML Action system
+                      Action: dialog.info
+                      ActionParams: title=Soft-Coded Action!;message=This dialog was triggered by AVML!\\n\\nNo hardcoded event handlers needed.\\nJust Action + ActionParams in YAML.\\n\\n✨ The future of RAD!
+                      
+                    - MenuItem: DemoFileOpen
+                      Header: File Open Dialog
+                      ToolTip: File picker demo
+                      Action: dialog.open
+                      ActionParams: title=Open AVML File;filter=*.avml;directory=~/Downloads
+                      
+                    - Separator: DemoSep1
+                    
+                    - MenuItem: TestCreateControl
+                      Header: 🧪 Test Create Button
+                      ToolTip: Test programmatic control creation
+                
+                - MenuItem: HelpMenu
+                  Header: _Help
+                  
+                  Children:
+                    - MenuItem: HelpDocs
+                      Header: _Documentation
+                      InputGesture: F1
+                      ToolTip: https://github.com/wallisoft/avalised
+                      Action: app.help
+                      
+                    - Separator: HelpSep1
+                      
+                    - MenuItem: HelpAbout
+                      Header: _About Avalised
+                      ToolTip: Built by Steve & Claude
+                      Action: app.about
+
         # ========== BOTTOM STATUS BAR ==========
         - Border: StatusBar
           DockPanel.Dock: Bottom
@@ -150,10 +321,92 @@ Window: DesignerWindow
           Background: #FAFAFA
           BorderBrush: #CCCCCC
           BorderThickness: 1
-          Padding: 20
+          Padding: 0
           
           Children:
-            - Canvas: DesignCanvas
-              Width: 800
-              Height: 600
-              Background: #FFFFFF
+            - DockPanel: CanvasChrome
+              LastChildFill: true
+              Background: #FAFAFA
+              
+              Children:
+                # Design Canvas (fills first - z-order bottom)
+                - Canvas: DesignCanvas
+                  Width: 800
+                  Height: 600
+                  Background: #FAFAFA
+                  Margin: 20,52,20,20
+                
+                # Title Bar with Window Controls (docked on top - z-order top)
+                - Border: CanvasTitleBar
+                  DockPanel.Dock: Top
+                  Height: 32
+                  Background: #E8E8E8
+                  BorderBrush: #CCCCCC
+                  BorderThickness: 0,0,0,1
+                  
+                  Children:
+                    - DockPanel: TitleBarContent
+                      LastChildFill: false
+                      
+                      Children:
+                        # Window Type Label
+                        - TextBlock: WindowTypeLabel
+                          DockPanel.Dock: Left
+                          Text: Form1
+                          FontSize: 12
+                          FontWeight: SemiBold
+                          VerticalAlignment: Center
+                          Margin: 10,0,0,0
+                        
+                        # Window Control Buttons (pinned right)
+                        - StackPanel: WindowControls
+                          DockPanel.Dock: Right
+                          Orientation: Horizontal
+                          Spacing: 4
+                          Margin: 0,3,6,3
+                          
+                          Children:
+                            - Button: BtnDialog
+                              Content: ▣
+                              Width: 32
+                              Height: 26
+                              FontSize: 16
+                              FontWeight: Bold
+                              Padding: 0
+                              ToolTip: Dialog Mode
+                              
+                            - Button: BtnWindowed
+                              Content: □
+                              Width: 32
+                              Height: 26
+                              FontSize: 16
+                              FontWeight: Bold
+                              Padding: 0
+                              ToolTip: Windowed Mode
+                              
+                            - Button: BtnFullscreen
+                              Content: ■
+                              Width: 32
+                              Height: 26
+                              FontSize: 16
+                              FontWeight: Bold
+                              Padding: 0
+                              ToolTip: Fullscreen Mode
+                              
+                            - Button: BtnMinimize
+                              Content: ▁
+                              Width: 32
+                              Height: 26
+                              FontSize: 16
+                              FontWeight: Bold
+                              Padding: 0
+                              ToolTip: Minimize
+
+
+
+
+
+
+
+
+

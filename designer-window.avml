@@ -98,6 +98,14 @@ Window: DesignerWindow
                       InputGesture: Delete
                       IsEnabled: false
                       
+                    - Separator: EditSep2
+                      
+                    - MenuItem: EditSettings
+                      Header: _Settings...
+                      InputGesture: Ctrl+,
+                      ToolTip: Open Settings window
+                      Action: edit.settings
+                      
                 - MenuItem: ViewMenu
                   Header: _View
                   
@@ -202,6 +210,8 @@ Window: DesignerWindow
           DockPanel.Dock: Left
           Width: 213
           Background: #F5F5F5
+          BorderThickness: 1
+          BorderBrush: #CCCCCC
           
           Children:
             - DockPanel: ToolboxLayout
@@ -236,7 +246,6 @@ Window: DesignerWindow
                           Width: 24
                           Height: 24
                           Margin: 0,2,2,2
-                          FontSize: 15
                           FontWeight: Bold
                           Foreground: #FFFFFF
                           Background: #00AA00
@@ -315,6 +324,8 @@ Window: DesignerWindow
           DockPanel.Dock: Right
           Width: 213
           Background: #F5F5F5
+          BorderThickness: 1
+          BorderBrush: #CCCCCC
           
           Children:
             - DockPanel: PropertiesLayout
@@ -349,7 +360,6 @@ Window: DesignerWindow
                           Width: 24
                           Height: 24
                           Margin: 0,2,2,2
-                          FontSize: 15
                           FontWeight: Bold
                           Foreground: #FFFFFF
                           Background: #00AA00
@@ -376,12 +386,17 @@ Window: DesignerWindow
                   
         # ========== CENTER CANVAS ==========
         - Border: CanvasContainer
-          BorderThickness: 0
           Background: #FAFAFA
           Padding: 20
+          BorderThickness: 3
+          BorderBrush: #00AA00
           
           Children:
             - Canvas: DesignCanvas
               Width: 800
               Height: 600
               Background: #FFFFFF
+
+
+
+

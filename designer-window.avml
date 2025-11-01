@@ -376,6 +376,7 @@ Window: DesignerWindow
                   
         # ========== CENTER CANVAS ==========
         - Border: CanvasContainer
+          BorderThickness: 0
           Background: #FAFAFA
           Padding: 20
           

@@ -215,6 +215,10 @@ INSERT OR IGNORE INTO actions (name, category, description, requires_params, is_
 INSERT OR IGNORE INTO actions (name, category, description, requires_params, is_async) VALUES
 ('canvas.addcontrol', 'canvas', 'Add control to design canvas', 1, 0);
 
+-- Panel Actions
+INSERT OR IGNORE INTO actions (name, category, description, requires_params, is_async) VALUES
+('panel.toggle', 'panel', 'Toggle panel visibility', 1, 0);
+
 -- ========== ACTION PARAMETERS ==========
 
 -- dialog.info parameters
